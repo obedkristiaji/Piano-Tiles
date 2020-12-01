@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Piano Tiles</string>
     <string name="start">START</string>
+    <string name="play">PLAY</string>
     <string name="pause">PAUSE</string>
+    <string name="resume">RESUME</string>
     <string name="score">0</string>
 </resources>
