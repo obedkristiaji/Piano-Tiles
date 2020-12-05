@@ -1,11 +1,10 @@
-package com.pppb.m06
+package com.example.pianotiles.view
 
 import android.graphics.Rect
 import android.util.Log
-import com.example.pianotiles.ThreadHandler
 import com.example.pianotiles.model.Piano
 
-class PianoThread(private val handler: ThreadHandler, private val canvas: Pair<Int, Int>) : Runnable {
+class PianoThread(private val handler: ThreadHandler, private val canvas: Pair<Int, Int>, private val level: Int) : Runnable {
     private var thread: Thread = Thread(this)
     private var start: Boolean = false
     private var initiate: Boolean = false
@@ -17,7 +16,7 @@ class PianoThread(private val handler: ThreadHandler, private val canvas: Pair<I
     override fun run() {
         try {
             while(start) {
-                Thread.sleep(10)
+                Thread.sleep((14/level.toLong()))
 
                 for((i, tile) in piano.tiles.withIndex()) {
                     var j = 0
@@ -37,8 +36,7 @@ class PianoThread(private val handler: ThreadHandler, private val canvas: Pair<I
 
                         if(newPos.top > this.canvas.second) {
                             this.start = false;
-                            this.handler.lose()
-                            this.handler.reset()
+                            this.handler.lose(this.score)
                             this.handler.stopThread()
                             break
                         }
@@ -48,7 +46,6 @@ class PianoThread(private val handler: ThreadHandler, private val canvas: Pair<I
                 }
 
                 this.handler.setRect(Pair(this.piano, this.score))
-
 
                 if(this.fill) {
                     this.randomTiles(exc)
@@ -107,6 +104,6 @@ class PianoThread(private val handler: ThreadHandler, private val canvas: Pair<I
     fun deleteTile(pos: Int, index: Int) {
         this.piano.tiles[pos].click(index)
         this.handler.deleteRect(this.piano)
-        this.score += 1000
+        this.score += 100
     }
 }
