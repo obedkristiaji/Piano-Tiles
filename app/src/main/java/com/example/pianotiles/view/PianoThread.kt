@@ -47,7 +47,7 @@ class PianoThread(private val handler: ThreadHandler, private val canvas: Pair<I
 
                 this.handler.setRect(Pair(this.piano, this.score))
 
-                if(this.fill) {
+                if(this.fill || (piano.tiles[0].tile.isEmpty() && piano.tiles[1].tile.isEmpty() && piano.tiles[2].tile.isEmpty() && piano.tiles[3].tile.isEmpty())) {
                     this.randomTiles(exc)
                 }
             }
