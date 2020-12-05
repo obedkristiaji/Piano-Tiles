@@ -24,12 +24,12 @@ class PianoThread(private val handler: ThreadHandler, private val canvas: Pair<I
                         val newPos = this.setPos(rect)
                         this.piano.tiles[i].setRect(j, newPos)
 
-                        if(rect.top < 0) {
+                        if(rect.top < -10) {
                             this.fill = false
                             break
                         }
 
-                        if(rect.top == 0) {
+                        if(rect.top > -10 && rect.top <= 0) {
                             this.fill = true
                             this.exc = i
                         }
@@ -58,8 +58,7 @@ class PianoThread(private val handler: ThreadHandler, private val canvas: Pair<I
 
     private fun initiate() {
         for(i in 1..this.piano.size) {
-            val top = (((i-1)/4f)*this.canvas.second).toInt()
-            this.piano.tiles[i-1].addTile(Rect(((((i-1)/4f)*this.canvas.first)).toInt(), top, (((i/4f)*this.canvas.first)).toInt(), top+500))
+            this.piano.tiles[i-1].addTile(Rect(((((i-1)/4f)*this.canvas.first)).toInt(), ((((i-1)/4f)*this.canvas.second)).toInt(), (((i/4f)*this.canvas.first)).toInt(), (((i/4f)*this.canvas.second)).toInt()))
         }
         this.randomTiles(exc)
     }
@@ -88,7 +87,8 @@ class PianoThread(private val handler: ThreadHandler, private val canvas: Pair<I
     }
 
     private fun setPos(rect: Rect): Rect {
-        val rect = Rect(rect.left, rect.top+25, rect.right, rect.bottom+25)
+        val plus = (((1/80f)*this.canvas.second)).toInt()
+        val rect = Rect(rect.left, rect.top+plus, rect.right, rect.bottom+plus)
         return rect
     }
 
@@ -97,7 +97,8 @@ class PianoThread(private val handler: ThreadHandler, private val canvas: Pair<I
         while((pos-1) == exc) {
             pos = (1..this.piano.size).random()
         }
-        this.piano.tiles[pos-1].addTile(Rect(((((pos-1)/4f)*this.canvas.first)).toInt(), (-500), (((pos/4f)*this.canvas.first)).toInt(), 0))
+        val plus = (((1/4f)*this.canvas.second)).toInt()
+        this.piano.tiles[pos-1].addTile(Rect(((((pos-1)/4f)*this.canvas.first)).toInt(), -plus, (((pos/4f)*this.canvas.first)).toInt(), 0))
         this.fill = false
     }
 
@@ -105,5 +106,9 @@ class PianoThread(private val handler: ThreadHandler, private val canvas: Pair<I
         this.piano.tiles[pos].click(index)
         this.handler.deleteRect(this.piano)
         this.score += 100
+    }
+
+    fun addShake() {
+        this.score += 10
     }
 }
