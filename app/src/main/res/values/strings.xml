@@ -4,5 +4,12 @@
     <string name="play">PLAY</string>
     <string name="pause">PAUSE</string>
     <string name="resume">RESUME</string>
+    <string name="setting">SETTING</string>
+    <string name="exit">EXIT</string>
+    <string name="replay">REPLAY</string>
+    <string name="home">HOME</string>
+    <string name="back">BACK</string>
     <string name="score">0</string>
+    <string name="normal">NORMAL</string>
+    <string name="hard">HARD</string>
 </resources>
