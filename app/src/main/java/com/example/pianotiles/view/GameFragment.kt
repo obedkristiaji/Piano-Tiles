@@ -136,6 +136,10 @@ class GameFragment : Fragment(), View.OnTouchListener {
         this.binding.ivCanvas.invalidate()
     }
 
+    fun addShake() {
+        this.pianoThread.addShake()
+    }
+
     override fun onTouch(view: View?, motionEvent: MotionEvent?): Boolean {
         if(this.presenter.isPlay() == true && this.presenter.isThread() == true && this.presenter.isPause() == false) {
             return this.mDetector.onTouchEvent(motionEvent)

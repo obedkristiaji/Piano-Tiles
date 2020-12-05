@@ -1,6 +1,14 @@
 package com.example.pianotiles.view
 
+import android.content.Context
+import android.content.pm.ActivityInfo
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.os.Bundle
+import android.view.Display
+import android.view.Surface
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -8,7 +16,7 @@ import com.example.pianotiles.databinding.ActivityMainBinding
 import com.example.pianotiles.model.Piano
 import com.example.pianotiles.presenter.MainPresenter
 
-class MainActivity: AppCompatActivity(), IMainActivity {
+class MainActivity: AppCompatActivity(), SensorEventListener, IMainActivity {
     private lateinit var binding: ActivityMainBinding
     private lateinit var fragmentManager: FragmentManager
     private lateinit var fragmentH: HomeFragment
@@ -18,11 +26,22 @@ class MainActivity: AppCompatActivity(), IMainActivity {
     private lateinit var fragmentS: SettingFragment
     private lateinit var handler: ThreadHandler
     private lateinit var presenter: MainPresenter
+    private lateinit var mSensorManager: SensorManager
+    private lateinit var accelerometer: Sensor
+    private lateinit var magnetometer: Sensor
+    private var accelerometerReading: FloatArray = FloatArray(3)
+    private var magnetometerReading: FloatArray = FloatArray(3)
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
         super.onCreate(savedInstanceState)
         this.binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(this.binding.root)
+
+        mSensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+
+        this.accelerometer = this.mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+        this.magnetometer = this.mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
 
         this.presenter = MainPresenter(this)
         this.handler = ThreadHandler(this.presenter)
@@ -42,6 +61,52 @@ class MainActivity: AppCompatActivity(), IMainActivity {
         if(hasFocus) {
             this.fragmentG.initiateGame()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(this.accelerometer != null) {
+            this.mSensorManager.registerListener(this, this.accelerometer, SensorManager.SENSOR_DELAY_NORMAL)
+        }
+
+        if(this.magnetometer != null) {
+            this.mSensorManager.registerListener(this, this.magnetometer, SensorManager.SENSOR_DELAY_NORMAL)
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        this.mSensorManager.unregisterListener(this)
+    }
+
+    override fun onSensorChanged(event: SensorEvent?) {
+        if(this.presenter.isPlay() == true) {
+            val sensorType: Int = event!!.sensor.getType()
+            when (sensorType) {
+                Sensor.TYPE_ACCELEROMETER -> this.accelerometerReading = event.values.clone()
+                Sensor.TYPE_MAGNETIC_FIELD -> this.magnetometerReading = event.values.clone()
+            }
+
+            val rotationMatrix = FloatArray(9)
+            val rotation = SensorManager.getRotationMatrix(rotationMatrix, null, this.accelerometerReading, this.magnetometerReading)
+
+            val orientationAngles = FloatArray(3)
+            if (rotation) {
+                SensorManager.getOrientation(rotationMatrix, orientationAngles)
+            }
+
+            if (Math.abs(orientationAngles[1]) > 1 || Math.abs(orientationAngles[1]) < -1) {
+                this.fragmentG.addShake()
+            }
+
+            if (Math.abs(orientationAngles[2]) > 1 || Math.abs(orientationAngles[2]) < -1) {
+                this.fragmentG.addShake()
+            }
+        }
+    }
+
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+        //
     }
 
     override fun changePage(page: Int) {
