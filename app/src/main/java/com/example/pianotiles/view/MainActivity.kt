@@ -1,7 +1,5 @@
 package com.example.pianotiles.view
 
-import android.R.attr.x
-import android.R.attr.y
 import android.content.Context
 import android.content.pm.ActivityInfo
 import android.hardware.Sensor
@@ -9,7 +7,6 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
