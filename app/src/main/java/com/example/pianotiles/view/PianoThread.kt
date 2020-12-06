@@ -23,12 +23,12 @@ class PianoThread(private val handler: ThreadHandler, private val canvas: Pair<I
                         val newPos = this.setPos(rect)
                         this.piano.tiles[i].setRect(j, newPos)
 
-                        if(rect.top < -10) {
+                        if(rect.top < -20) {
                             this.fill = false
                             break
                         }
 
-                        if(rect.top > -10 && rect.top <= 0) {
+                        if(rect.top > -20 && rect.top <= 0) {
                             this.fill = true
                             this.exc = i
                         }
