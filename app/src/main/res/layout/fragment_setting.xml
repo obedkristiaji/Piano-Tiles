@@ -6,10 +6,10 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="350dp"
+        android:layout_width="@dimen/xxjumbo"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:padding="5dp"
+        android:padding="@dimen/xxsmall"
         android:background="@drawable/custom_dialog"
         android:orientation="vertical">
 
@@ -18,35 +18,36 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="@dimen/small"
             android:src="@drawable/btn_close"
-            android:background="@drawable/custom_btn"/>
+            android:background="@drawable/custom_btn" />
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/xxsmall">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tv_background"
-                android:layout_marginRight="20dp"
-                android:textSize="20dp"
-                android:textColor="@color/black"/>
+                android:layout_marginRight="@dimen/small"
+                android:textSize="@dimen/small"
+                android:textColor="@color/black" />
 
             <Button
                 android:id="@+id/btn_red"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="@dimen/xsmall"
                 android:layout_weight="1"
-                android:backgroundTint="@color/red"/>
+                android:backgroundTint="@color/red" />
 
             <Button
                 android:id="@+id/btn_green"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="@dimen/xsmall"
                 android:layout_weight="1"
                 android:backgroundTint="@color/green" />
 
@@ -66,24 +67,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tv_difficulty"
-                android:textSize="20dp"
-                android:layout_marginRight="50dp"
-                android:textColor="@color/black"/>
+                android:textSize="@dimen/small"
+                android:layout_marginRight="@dimen/xlarge"
+                android:textColor="@color/black" />
 
             <Button
                 android:id="@+id/btn_normal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="25dp"
+                android:layout_marginRight="@dimen/medium"
                 android:text="@string/btn_normal"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white" />
 
             <Button
                 android:id="@+id/btn_hard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/btn_hard"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white" />
         </TableRow>
     </LinearLayout>
 

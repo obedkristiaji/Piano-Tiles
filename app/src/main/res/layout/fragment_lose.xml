@@ -5,10 +5,10 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="300dp"
+        android:layout_width="@dimen/xjumbo"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:padding="5dp"
+        android:padding="@dimen/xxsmall"
         android:background="@drawable/custom_dialog"
         android:orientation="vertical">
 
@@ -16,11 +16,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/tv_game_over"
-            android:padding="10dp"
+            android:padding="@dimen/xsmall"
             android:layout_weight="1"
             android:textColor="@color/black"
-            android:textSize="45dp"
-            android:textAlignment="center"/>
+            android:textSize="@dimen/xlarge"
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/tv_score"
@@ -28,9 +28,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="@color/black"
-            android:padding="10dp"
-            android:textSize="30dp"
-            android:textAlignment="center"/>
+            android:padding="@dimen/xsmall"
+            android:textSize="@dimen/large"
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/tv_HS"
@@ -38,9 +38,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="@color/black"
-            android:padding="5dp"
-            android:textSize="20dp"
-            android:textAlignment="center"/>
+            android:padding="@dimen/xxsmall"
+            android:textSize="@dimen/small"
+            android:textAlignment="center" />
 
         <TableRow
             android:layout_width="match_parent"
@@ -51,9 +51,9 @@
                 android:id="@+id/btn_home"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="20dp"
-                android:paddingVertical="3dp"
-                android:layout_marginRight="130dp"
+                android:paddingHorizontal="@dimen/small"
+                android:paddingVertical="@dimen/xxsmall"
+                android:layout_marginRight="@dimen/jumbo"
                 android:background="@drawable/custom_btn"
                 android:src="@drawable/btn_home" />
 
@@ -61,8 +61,8 @@
                 android:id="@+id/btn_replay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="20dp"
-                android:paddingVertical="3dp"
+                android:paddingHorizontal="@dimen/small"
+                android:paddingVertical="@dimen/xxsmall"
                 android:background="@drawable/custom_btn"
                 android:src="@drawable/btn_tryagain" />
         </TableRow>

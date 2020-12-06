@@ -14,26 +14,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
-            android:textSize="50dp"
+            android:textSize="@dimen/xlarge"
             android:layout_gravity="center"
-            android:textAlignment="center"/>
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/tv_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30dp"
+            android:textSize="@dimen/large"
             android:layout_gravity="center"
-            android:textAlignment="center"/>
+            android:textAlignment="center" />
 
         <Button
             android:id="@+id/btn_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:padding="@dimen/xsmall"
             android:text="PLAY AGAIN"
-            android:textSize="25dp"
-            android:background="@drawable/custom_btn"/>
+            android:textSize="@dimen/medium"
+            android:textColor="@color/white"
+            android:background="@drawable/custom_btn" />
 
         <TableRow
             android:layout_width="wrap_content"
@@ -44,17 +45,17 @@
                 android:id="@+id/btn_setting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="20dp"
+                android:padding="@dimen/small"
                 android:src="@drawable/btn_setting"
-                android:background="@android:color/transparent"/>
+                android:background="@android:color/transparent" />
 
             <ImageButton
                 android:id="@+id/btn_exit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="20dp"
+                android:padding="@dimen/small"
                 android:src="@drawable/btn_exit"
-                android:background="@android:color/transparent"/>
+                android:background="@android:color/transparent" />
         </TableRow>
     </TableLayout>
 

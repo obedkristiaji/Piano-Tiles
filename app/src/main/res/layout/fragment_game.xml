@@ -8,31 +8,32 @@
     <ImageView
         android:id="@+id/iv_canvas"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
     <TableRow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:padding="5dp">
+        android:padding="@dimen/xxsmall">
 
         <ImageButton
             android:id="@+id/btn_play"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/btn_play"
-            android:background="@drawable/custom_btn"/>
+            android:layout_marginRight="@dimen/xsmall"
+            android:background="@drawable/custom_btn" />
 
         <TextView
             android:id="@+id/tv_score"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:padding="10dp"
+            android:padding="@dimen/xsmall"
             android:background="@drawable/custom_dialog"
             android:text="@string/score"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:gravity="center"/>
+            android:gravity="center" />
     </TableRow>
 
 </FrameLayout>
