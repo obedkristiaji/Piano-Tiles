@@ -1,5 +1,7 @@
 package com.example.pianotiles.view
 
+import android.R.attr.x
+import android.R.attr.y
 import android.content.Context
 import android.content.pm.ActivityInfo
 import android.hardware.Sensor
@@ -7,12 +9,14 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.example.pianotiles.databinding.ActivityMainBinding
 import com.example.pianotiles.model.Piano
 import com.example.pianotiles.presenter.MainPresenter
+
 
 class MainActivity: AppCompatActivity(), SensorEventListener, IMainActivity {
     private lateinit var binding: ActivityMainBinding
@@ -26,9 +30,8 @@ class MainActivity: AppCompatActivity(), SensorEventListener, IMainActivity {
     private lateinit var presenter: MainPresenter
     private lateinit var mSensorManager: SensorManager
     private lateinit var accelerometer: Sensor
-    private lateinit var magnetometer: Sensor
     private var accelerometerReading: FloatArray = FloatArray(3)
-    private var magnetometerReading: FloatArray = FloatArray(3)
+    private var lastUpdate: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
@@ -39,7 +42,6 @@ class MainActivity: AppCompatActivity(), SensorEventListener, IMainActivity {
         mSensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
         this.accelerometer = this.mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
-        this.magnetometer = this.mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
 
         this.presenter = MainPresenter(this)
         this.handler = ThreadHandler(this.presenter)
@@ -48,7 +50,7 @@ class MainActivity: AppCompatActivity(), SensorEventListener, IMainActivity {
         this.fragmentH = HomeFragment.newInstance(this.presenter)
         this.fragmentL = LoseFragment.newInstance(this.presenter)
         this.fragmentS = SettingFragment.newInstance(this.presenter)
-        this.fragmentC = CountdownFragment()
+        this.fragmentC = CountdownFragment.newInstance(this.presenter)
         this.fragmentManager = this.supportFragmentManager
 
         this.changePage(2)
@@ -66,10 +68,6 @@ class MainActivity: AppCompatActivity(), SensorEventListener, IMainActivity {
         if(this.accelerometer != null) {
             this.mSensorManager.registerListener(this, this.accelerometer, SensorManager.SENSOR_DELAY_NORMAL)
         }
-
-        if(this.magnetometer != null) {
-            this.mSensorManager.registerListener(this, this.magnetometer, SensorManager.SENSOR_DELAY_NORMAL)
-        }
     }
 
     override fun onPause() {
@@ -79,26 +77,22 @@ class MainActivity: AppCompatActivity(), SensorEventListener, IMainActivity {
 
     override fun onSensorChanged(event: SensorEvent?) {
         if(this.presenter.isPlay() == true) {
-            val sensorType: Int = event!!.sensor.getType()
-            when (sensorType) {
-                Sensor.TYPE_ACCELEROMETER -> this.accelerometerReading = event.values.clone()
-                Sensor.TYPE_MAGNETIC_FIELD -> this.magnetometerReading = event.values.clone()
-            }
-
-            val rotationMatrix = FloatArray(9)
-            val rotation = SensorManager.getRotationMatrix(rotationMatrix, null, this.accelerometerReading, this.magnetometerReading)
-
-            val orientationAngles = FloatArray(3)
-            if (rotation) {
-                SensorManager.getOrientation(rotationMatrix, orientationAngles)
-            }
-
-            if (Math.abs(orientationAngles[1]) > 1 || Math.abs(orientationAngles[1]) < -1) {
-                this.fragmentG.addShake()
-            }
-
-            if (Math.abs(orientationAngles[2]) > 1 || Math.abs(orientationAngles[2]) < -1) {
-                this.fragmentG.addShake()
+            if (event!!.sensor.type == Sensor.TYPE_ACCELEROMETER) {
+                val curTime = System.currentTimeMillis()
+                if (curTime - lastUpdate > 100) {
+                    val diffTime: Long = curTime - lastUpdate
+                    lastUpdate = curTime
+                    val x = event.values[0]
+                    val y = event.values[1]
+                    val z = event.values[2]
+                    val speed: Float = Math.abs(x + y + z - accelerometerReading[0] - accelerometerReading[1] - accelerometerReading[2]) / diffTime * 10000
+                    if (speed > 500) {
+                        this.fragmentG.addShake()
+                    }
+                    accelerometerReading[0] = x
+                    accelerometerReading[1] = y
+                    accelerometerReading[2] = z
+                }
             }
         }
     }

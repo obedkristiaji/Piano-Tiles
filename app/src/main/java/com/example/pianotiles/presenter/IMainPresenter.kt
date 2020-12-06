@@ -26,8 +26,10 @@ interface IMainPresenter {
     fun setLevel(level: Int)
     fun isStartHome(): Boolean
     fun isStartLose(): Boolean
+    fun isStartGame(): Boolean
     fun setStartHome(start: Boolean)
     fun setStartLose(start: Boolean)
+    fun setStartGame(start: Boolean)
     fun setLastScore(score: Int)
     fun getLastScore(): Int
 }

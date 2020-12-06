@@ -51,6 +51,7 @@ class GameFragment : Fragment(), View.OnTouchListener {
                 this.listener.showCountdown()
             } else if(this.imageResource == R.drawable.btn_pause) {
                 this.presenter.setPause(true)
+                this.presenter.setPlay(false)
                 this.binding.btnPlay.setImageResource(R.drawable.btn_resume)
                 this.imageResource = R.drawable.btn_resume
                 this.pianoThread.stop()
@@ -101,9 +102,9 @@ class GameFragment : Fragment(), View.OnTouchListener {
     }
 
     fun initiateGame() {
-        if(this.presenter.isPlay() == false) {
+        if(this.presenter.isStartGame() == false) {
             this.initiatePage()
-            this.presenter.setPlay(true)
+            this.presenter.setStartGame(true)
         } else {
             this.initiateCanvas()
             this.setScore(0)
@@ -147,7 +148,7 @@ class GameFragment : Fragment(), View.OnTouchListener {
     }
 
     override fun onTouch(view: View?, motionEvent: MotionEvent?): Boolean {
-        if(this.presenter.isPlay() == true && this.presenter.isThread() == true && this.presenter.isPause() == false) {
+        if(this.presenter.isStartGame() == true && this.presenter.isThread() == true && this.presenter.isPause() == false) {
             return this.mDetector.onTouchEvent(motionEvent)
         } else {
             return false

@@ -9,6 +9,7 @@ class MainPresenter(private val view: MainActivity): IMainPresenter {
     private var piano: Piano = Piano()
     private var startHome = false
     private var startLose = false
+    private var startGame = false
     private var thread = false
     private var play = false
     private var pause = false
@@ -20,6 +21,7 @@ class MainPresenter(private val view: MainActivity): IMainPresenter {
         if(score > this.db.getScore()) {
             this.db.saveScore(score)
         }
+        this.play = false
         this.lose = true
         this.view.showLoseDialog()
         if(this.startLose == true) {
@@ -115,7 +117,11 @@ class MainPresenter(private val view: MainActivity): IMainPresenter {
     }
 
     override fun isStartLose(): Boolean {
-        return this.startHome
+        return this.startLose
+    }
+
+    override fun isStartGame(): Boolean {
+        return this.startGame
     }
 
     override fun setStartHome(start: Boolean) {
@@ -124,6 +130,10 @@ class MainPresenter(private val view: MainActivity): IMainPresenter {
 
     override fun setStartLose(start: Boolean) {
         this.startLose = start
+    }
+
+    override fun setStartGame(start: Boolean) {
+        this.startGame = start
     }
 
     override fun setLastScore(score: Int) {

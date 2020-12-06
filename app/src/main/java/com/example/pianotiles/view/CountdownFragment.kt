@@ -10,10 +10,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.example.pianotiles.databinding.FragmentCountdownBinding
+import com.example.pianotiles.presenter.IMainPresenter
 
 class CountdownFragment : DialogFragment() {
     private lateinit var binding: FragmentCountdownBinding
     private lateinit var listener: IMainActivity
+    private lateinit var presenter: IMainPresenter
     private var counter = 3
 
     init {
@@ -37,6 +39,7 @@ class CountdownFragment : DialogFragment() {
             override fun onFinish() {
                 counter = 3
                 dismiss()
+                presenter.setPlay(true)
                 listener.startThread()
             }
         }.start()
@@ -51,6 +54,14 @@ class CountdownFragment : DialogFragment() {
         } else {
             throw ClassCastException(context.toString()
                     + " must implement FragmentListener")
+        }
+    }
+
+    companion object {
+        fun newInstance(presenter: IMainPresenter): CountdownFragment {
+            val fragment: CountdownFragment = CountdownFragment()
+            fragment.presenter = presenter
+            return fragment
         }
     }
 }
