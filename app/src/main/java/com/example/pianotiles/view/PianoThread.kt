@@ -1,7 +1,6 @@
 package com.example.pianotiles.view
 
 import android.graphics.Rect
-import android.util.Log
 import com.example.pianotiles.model.Piano
 
 class PianoThread(private val handler: ThreadHandler, private val canvas: Pair<Int, Int>, private val level: Int) : Runnable {

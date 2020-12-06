@@ -5,7 +5,6 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.GestureDetectorCompat
@@ -14,7 +13,6 @@ import com.example.pianotiles.R
 import com.example.pianotiles.databinding.FragmentGameBinding
 import com.example.pianotiles.model.Piano
 import com.example.pianotiles.presenter.IMainPresenter
-import kotlin.properties.Delegates
 
 class GameFragment : Fragment(), View.OnTouchListener {
     private lateinit var binding: FragmentGameBinding
@@ -103,11 +101,12 @@ class GameFragment : Fragment(), View.OnTouchListener {
     }
 
     fun initiateGame() {
-        this.initiateCanvas()
-        this.setScore(0)
         if(this.presenter.isPlay() == false) {
             this.initiatePage()
             this.presenter.setPlay(true)
+        } else {
+            this.initiateCanvas()
+            this.setScore(0)
         }
 
         if(this.presenter.isLose() == true) {
