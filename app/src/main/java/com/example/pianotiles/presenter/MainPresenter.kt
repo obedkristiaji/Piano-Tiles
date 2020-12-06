@@ -1,6 +1,5 @@
 package com.example.pianotiles.presenter
 
-import android.util.Log
 import com.example.pianotiles.model.Piano
 import com.example.pianotiles.storage.GameStorage
 import com.example.pianotiles.view.MainActivity

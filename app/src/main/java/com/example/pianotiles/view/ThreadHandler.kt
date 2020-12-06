@@ -4,7 +4,6 @@ import android.os.Handler
 import android.os.Message
 import com.example.pianotiles.model.Piano
 import com.example.pianotiles.presenter.IMainPresenter
-import com.example.pianotiles.view.MainActivity
 
 class ThreadHandler(private val presenter: IMainPresenter): Handler() {
     private val MSG_SET_RECT: Int = 0
