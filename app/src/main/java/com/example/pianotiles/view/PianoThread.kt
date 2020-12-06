@@ -104,7 +104,11 @@ class PianoThread(private val handler: ThreadHandler, private val canvas: Pair<I
     fun deleteTile(pos: Int, index: Int) {
         this.piano.tiles[pos].click(index)
         this.handler.deleteRect(this.piano)
-        this.score += 100
+        if(this.level == 1) {
+            this.score += 100
+        } else {
+            this.score += 200
+        }
     }
 
     fun addShake() {
