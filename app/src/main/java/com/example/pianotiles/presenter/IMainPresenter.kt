@@ -11,12 +11,10 @@ interface IMainPresenter {
     fun setScore(score: Int)
     fun getPiano(): Piano
     fun getScore(): Int
-    fun isStart(): Boolean
     fun isThread(): Boolean
     fun isPlay(): Boolean
     fun isPause(): Boolean
     fun isLose(): Boolean
-    fun setStart(start: Boolean)
     fun setThread(thread: Boolean)
     fun setPlay(play: Boolean)
     fun setPause(pause: Boolean)
@@ -26,4 +24,10 @@ interface IMainPresenter {
     fun getPL(): Int
     fun setColor(color: Int)
     fun setLevel(level: Int)
+    fun isStartHome(): Boolean
+    fun isStartLose(): Boolean
+    fun setStartHome(start: Boolean)
+    fun setStartLose(start: Boolean)
+    fun setLastScore(score: Int)
+    fun getLastScore(): Int
 }

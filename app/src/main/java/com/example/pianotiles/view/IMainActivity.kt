@@ -13,4 +13,5 @@ interface IMainActivity {
     fun startThread()
     fun updateHighScore(score: Int)
     fun initialize()
+    fun setLoseScore(score: Int)
 }

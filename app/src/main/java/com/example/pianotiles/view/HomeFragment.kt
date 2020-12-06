@@ -29,7 +29,6 @@ class HomeFragment : Fragment() {
         this.init()
 
         this.binding.btnBack.setOnClickListener {
-            this.listener.initialize()
             this.listener.changePage(2)
         }
 
@@ -68,6 +67,6 @@ class HomeFragment : Fragment() {
 
     private fun init() {
         this.setScore(this.presenter.getHS())
-        this.presenter.setStart(true)
+        this.presenter.setStartHome(true)
     }
 }

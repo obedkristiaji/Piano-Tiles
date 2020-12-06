@@ -27,18 +27,19 @@ class LoseFragment : DialogFragment() {
     ): View? {
         this.binding = FragmentLoseBinding.inflate(inflater, container, false)
 
+        this.init()
+
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         this.binding.btnReplay.setOnClickListener {
             dismiss()
-            this.listener.initialize()
             this.listener.changePage(2)
         }
 
         this.binding.btnHome.setOnClickListener {
             dismiss()
             this.listener.changePage(1)
-            if(this.presenter.isStart() == true) {
+            if(this.presenter.isStartHome() == true) {
                 this.listener.updateHighScore(this.presenter.getHS())
             }
         }
@@ -62,5 +63,15 @@ class LoseFragment : DialogFragment() {
             fragment.presenter = presenter
             return fragment
         }
+    }
+
+    fun setScore(score: Int) {
+        this.binding.tvScore.setText("Your Score: " + score.toString())
+        this.binding.tvHS.setText("High Score: " + this.presenter.getHS().toString())
+    }
+
+    private fun init() {
+        this.setScore(this.presenter.getLastScore())
+        this.presenter.setStartLose(true)
     }
 }

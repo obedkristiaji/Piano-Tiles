@@ -173,4 +173,8 @@ class MainActivity: AppCompatActivity(), SensorEventListener, IMainActivity {
     override fun initialize() {
         this.fragmentG.initiatePage()
     }
+
+    override fun setLoseScore(score: Int) {
+        this.fragmentL.setScore(score)
+    }
 }
