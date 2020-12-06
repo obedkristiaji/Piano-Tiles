@@ -14,6 +14,7 @@ import com.example.pianotiles.R
 import com.example.pianotiles.databinding.FragmentGameBinding
 import com.example.pianotiles.model.Piano
 import com.example.pianotiles.presenter.IMainPresenter
+import kotlin.properties.Delegates
 
 class GameFragment : Fragment(), View.OnTouchListener {
     private lateinit var binding: FragmentGameBinding
@@ -23,6 +24,7 @@ class GameFragment : Fragment(), View.OnTouchListener {
     private lateinit var handler: ThreadHandler
     private lateinit var presenter: IMainPresenter
     lateinit var pianoThread: PianoThread
+    private var imageResource = R.drawable.btn_play
 
     init {
 
@@ -45,16 +47,19 @@ class GameFragment : Fragment(), View.OnTouchListener {
                 this.presenter.setThread(true)
             }
 
-            if(this.binding.btnPlay.text.equals("PLAY")) {
-                this.binding.btnPlay.setText(R.string.pause)
+            if(this.imageResource == R.drawable.btn_play) {
+                this.binding.btnPlay.setImageResource(R.drawable.btn_pause)
+                this.imageResource = R.drawable.btn_pause
                 this.listener.showCountdown()
-            } else if(this.binding.btnPlay.text.equals("PAUSE")) {
+            } else if(this.imageResource == R.drawable.btn_pause) {
                 this.presenter.setPause(true)
-                this.binding.btnPlay.setText(R.string.resume)
+                this.binding.btnPlay.setImageResource(R.drawable.btn_resume)
+                this.imageResource = R.drawable.btn_resume
                 this.pianoThread.stop()
-            } else if(this.binding.btnPlay.text.equals("RESUME")) {
+            } else if(this.imageResource == R.drawable.btn_resume) {
                 this.presenter.setPause(false)
-                this.binding.btnPlay.setText(R.string.pause)
+                this.binding.btnPlay.setImageResource(R.drawable.btn_pause)
+                this.imageResource = R.drawable.btn_pause
                 this.pianoThread.setPiano(this.presenter.getPiano(), this.presenter.getScore())
                 this.listener.showCountdown()
             }
@@ -94,17 +99,19 @@ class GameFragment : Fragment(), View.OnTouchListener {
     }
 
     fun setScore(score: Int) {
-        this.binding.tvScore.setText(score.toString())
+        this.binding.tvScore.setText("Score : " + score.toString())
     }
 
     fun initiateGame() {
+        this.initiateCanvas()
+        this.setScore(0)
         if(this.presenter.isPlay() == false) {
             this.initiatePage()
             this.presenter.setPlay(true)
         }
 
         if(this.presenter.isLose() == true) {
-            this.binding.btnPlay.setText(R.string.play)
+            this.binding.btnPlay.setImageResource(R.drawable.btn_play)
             this.presenter.setLose(false)
         }
     }

@@ -8,20 +8,24 @@ import com.example.pianotiles.view.MainActivity
 class MainPresenter(private val view: MainActivity): IMainPresenter {
     private val db: GameStorage = GameStorage(this.view)
     private var piano: Piano = Piano()
-    private var start = false
+    private var startHome = false
+    private var startLose = false
     private var thread = false
     private var play = false
     private var pause = false
     private var lose = false
     private var score = 0
+    private var lastScore = 0
 
     override fun lose(score: Int) {
         if(score > this.db.getScore()) {
             this.db.saveScore(score)
         }
         this.lose = true
-        this.play = false
         this.view.showLoseDialog()
+        if(this.startLose == true) {
+            this.view.setLoseScore(this.lastScore)
+        }
     }
 
     override fun resetThread() {
@@ -36,6 +40,7 @@ class MainPresenter(private val view: MainActivity): IMainPresenter {
     override fun setRect(piano: Piano, score: Int) {
         this.view.drawPiano(piano)
         this.setScore(score)
+        this.setLastScore(score)
     }
 
     override fun deleteRect(piano: Piano) {
@@ -54,10 +59,6 @@ class MainPresenter(private val view: MainActivity): IMainPresenter {
         return this.score
     }
 
-    override fun isStart(): Boolean {
-        return this.start
-    }
-
     override fun isThread(): Boolean {
         return this.thread
     }
@@ -72,10 +73,6 @@ class MainPresenter(private val view: MainActivity): IMainPresenter {
 
     override fun isLose(): Boolean {
         return this.lose
-    }
-
-    override fun setStart(start: Boolean) {
-        this.start = start
     }
 
     override fun setThread(thread: Boolean) {
@@ -112,5 +109,29 @@ class MainPresenter(private val view: MainActivity): IMainPresenter {
 
     override fun setLevel(level: Int) {
         this.db.saveLevel(level)
+    }
+
+    override fun isStartHome(): Boolean {
+        return this.startHome
+    }
+
+    override fun isStartLose(): Boolean {
+        return this.startHome
+    }
+
+    override fun setStartHome(start: Boolean) {
+        this.startHome = start
+    }
+
+    override fun setStartLose(start: Boolean) {
+        this.startLose = start
+    }
+
+    override fun setLastScore(score: Int) {
+        this.lastScore = score
+    }
+
+    override fun getLastScore(): Int {
+        return this.lastScore
     }
 }

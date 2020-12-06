@@ -1,20 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/btn_replay"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="@string/replay" />
+        android:layout_gravity="center"
+        android:padding="5dp"
+        android:background="@drawable/custom_dialog"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btn_home"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/home" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_game_over"
+            android:padding="10dp"
+            android:layout_weight="1"
+            android:textColor="@color/black"
+            android:textSize="45dp"
+            android:textAlignment="center"/>
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/tv_score"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/black"
+            android:padding="10dp"
+            android:textSize="30dp"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/tv_HS"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/black"
+            android:padding="5dp"
+            android:textSize="20dp"
+            android:textAlignment="center"/>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom">
+
+            <ImageButton
+                android:id="@+id/btn_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="3dp"
+                android:layout_marginRight="130dp"
+                android:background="@drawable/custom_btn"
+                android:src="@drawable/btn_home" />
+
+            <ImageButton
+                android:id="@+id/btn_replay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="3dp"
+                android:background="@drawable/custom_btn"
+                android:src="@drawable/btn_tryagain" />
+        </TableRow>
+    </LinearLayout>
+
+</FrameLayout>
